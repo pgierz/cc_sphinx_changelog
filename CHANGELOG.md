@@ -1,3 +1,9 @@
+## v0.4.1 (2020-12-24)
+
+### Fix
+
+- better implementation of getting commit messages
+
 ## v0.4.0 (2020-12-24)
 
 ### Feat
