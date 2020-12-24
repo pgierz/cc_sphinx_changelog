@@ -1,3 +1,9 @@
+## v0.3.0 (2020-12-24)
+
+### Feat
+
+- automatic bump version on push
+
 ## v0.2.0 (2020-12-24)
 
 ### Fix
