@@ -1,3 +1,9 @@
+## v0.4.0 (2020-12-24)
+
+### Feat
+
+- parses log and prints rST style release version summaries
+
 ## v0.3.0 (2020-12-24)
 
 ### Feat
