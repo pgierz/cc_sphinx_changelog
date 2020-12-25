@@ -11,7 +11,7 @@ with open('README.rst') as readme_file:
 with open('CHANGELOG.md') as history_file:
     history = history_file.read()
 
-requirements = ["gitpython", "backpedal"]
+requirements = ["gitpython", "backpedal", "ansiwrap", "crayons"]
 
 setup_requirements = [ ]
 
