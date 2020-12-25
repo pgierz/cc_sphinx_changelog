@@ -1,3 +1,13 @@
+## v0.5.0 (2020-12-25)
+
+### Feat
+
+- adds color output and formats to stdout nicely
+
+### Refactor
+
+- puts everything into functions
+
 ## v0.4.1 (2020-12-24)
 
 ### Fix
