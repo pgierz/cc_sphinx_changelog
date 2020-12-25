@@ -1,3 +1,8 @@
+=========
+Changelog
+=========
+
+
 Unreleased
 ==========
 
@@ -28,7 +33,7 @@ Support
 * 0dc1750                  puts everything into functions
 Unknown
 -------
-* dff4e2f                  
+* dff4e2f
 
 
 0.4.1
