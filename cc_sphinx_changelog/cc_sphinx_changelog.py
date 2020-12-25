@@ -4,7 +4,18 @@
 """Main module."""
 
 import backpedal
+import crayons
 import git
+
+from ansiwrap import ansilen
+import textwrap
+
+def ansi_ljust(s, width):
+    needed = width - ansilen(s)
+    if needed > 0:
+        return s + " " * needed
+    else:
+        return s
 
 def get_repo(repo_top=None):
     # TODO: Path from config (or URL??)
@@ -15,7 +26,7 @@ def get_repo(repo_top=None):
 
 def get_commit_messages(repo):
     log = repo.head.log()
-    commit_messages = [commit.message.strip() for commit in repo.iter_commits()]
+    commit_messages = [(commit.hexsha[:7], commit.message.strip()) for commit in repo.iter_commits()]
     return commit_messages
 
 
@@ -23,8 +34,8 @@ def group_commits(commit_messages):
     releases = {"Unreleased": {}}
     current_release = releases["Unreleased"]
     for message in commit_messages:
-        if message.startswith("bump:"):
-            rel_head = message.split(" → ")[-1]
+        if message[1].startswith("bump:"):
+            rel_head = message[1].split(" → ")[-1]
             releases[rel_head] = {}
             current_release = releases[rel_head]
         fmt_message(message, current_release)
@@ -32,19 +43,47 @@ def group_commits(commit_messages):
 
 
 def fmt_message(message, current_release):
+    sha, message = message
     if message.startswith("bump:"):
         return
     message = message.split(":")
     commit_type, commit_message =  message[0], ":".join(message[1:])
     if "\n" in commit_message:
-        commit_message = "\n".join([commit_message.splitlines()[0]]+["  "+msg for msg in commit_message.splitlines()][1:])
+        commit_header = commit_message.splitlines()[0].lstrip()
+        commit_body = textwrap.fill(" ".join(commit_message.splitlines()[1:]).strip())
+        commit_body = "\n".join(27*" "+l for l in commit_body.splitlines())
+        commit_message = f"{commit_header}\n\n{commit_body}"
+    else:
+        commit_message = commit_message.strip()
     scope = None
     if "(" in commit_type and ")" in commit_type:
         commit_type, scope = commit_type.split("(")
         scope = scope.replace(")", "")
     commits = current_release.setdefault(commit_type, [])
-    fmted_message = f"**{scope}**: {commit_message}" if scope else f"{commit_message}"
+    if scope:
+        prejust = f"{crayons.yellow(sha)} [{crayons.red(scope)}]"
+        fmted_message = f"{ansi_ljust(prejust, 25)}" + commit_message
+    else:
+        fmted_message = f"{ansi_ljust(crayons.yellow(sha), 25)}{commit_message}"
     commits.append(fmted_message)
+
+def fmt_headings(items):
+    TYPES = {"fix": "Bug Fix", "feat": "New Feature", "ci": "Support", "docs": "Support", "perf": "Support", "refactor": "Support"}
+    SHOWN_HEADINGS = {"Bug Fix": [], "New Feature": [], "Support": [], "Unknown": []}
+    for heading, commits in items:
+        group = SHOWN_HEADINGS.get(TYPES.get(heading), "Unknown")
+        for commit in commits:
+            group.append(commit)
+    for group in SHOWN_HEADINGS:
+        if group == "Bug Fix":
+            if len(SHOWN_HEADINGS[group]) > 1:
+                SHOWN_HEADINGS["Bug Fixes"] = SHOWN_HEADINGS[group]
+                del SHOWN_HEADINGS[group]
+        elif group == "New Feature":
+            if len(SHOWN_HEADINGS[group]) > 1:
+                SHOWN_HEADINGS["New Features"] = SHOWN_HEADINGS[group]
+                del SHOWN_HEADINGS[group]
+    return SHOWN_HEADINGS
 
 
 if __name__ == "__main__":
@@ -53,10 +92,12 @@ if __name__ == "__main__":
     releases = group_commits(commit_messages)
 
     for release in releases:
-        print(release)
-        print("="*len(release))
-        for heading, items in releases[release].items():
-            print(f"{heading}")
-            print("-"*len(heading))
-            for item in items:
-                print(f"* {item}")
+        print(crayons.cyan(release))
+        print(crayons.cyan("="*len(release)))
+        for heading, items in fmt_headings(releases[release].items()).items():
+            if items:
+                print(f"{crayons.green(heading)}")
+                print(crayons.green("-"*len(heading)))
+                for item in items:
+                    print(f"* {item}")
+        print("\n")
