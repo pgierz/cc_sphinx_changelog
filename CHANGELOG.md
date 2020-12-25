@@ -1,3 +1,10 @@
+## v0.5.1 (2020-12-25)
+
+### Fix
+
+- fixes heading grouping logic
+- **setup.py**: adds missing dependencies
+
 ## v0.5.0 (2020-12-25)
 
 ### Feat
