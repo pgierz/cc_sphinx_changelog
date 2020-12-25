@@ -71,7 +71,7 @@ def fmt_headings(items):
     TYPES = {"fix": "Bug Fix", "feat": "New Feature", "ci": "Support", "docs": "Support", "perf": "Support", "refactor": "Support"}
     SHOWN_HEADINGS = {"Bug Fix": [], "New Feature": [], "Support": [], "Unknown": []}
     for heading, commits in items:
-        group = SHOWN_HEADINGS.get(TYPES.get(heading), "Unknown")
+        group = SHOWN_HEADINGS.get(TYPES.get(heading, "Unknown"))
         for commit in commits:
             group.append(commit)
     for group in SHOWN_HEADINGS:
