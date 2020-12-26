@@ -99,18 +99,25 @@ def fmt_headings(items):
     return SHOWN_HEADINGS
 
 
-if __name__ == "__main__":
+def print_changelog(location):
+    if isinstance(location, str):
+        location = open(location, "w")
     repo = get_repo()
     commit_messages = get_commit_messages(repo)
     releases = group_commits(commit_messages)
 
     for release in releases:
-        print(crayons.cyan(release))
-        print(crayons.cyan("="*len(release)))
+        print(crayons.cyan(release), file=location)
+        print(crayons.cyan("=" * len(release)), file=location)
         for heading, items in fmt_headings(releases[release].items()).items():
             if items:
-                print(f"{crayons.green(heading)}")
-                print(crayons.green("-"*len(heading)))
+                print(f"{crayons.green(heading)}", file=location)
+                print(crayons.green("-" * len(heading)), file=location)
                 for item in items:
-                    print(f"* {item}")
-        print("\n")
+                    print(f"* {item}", file=location)
+        print("\n", file=location)
+    location.close()
+
+
+if __name__ == "__main__":
+    print_changelog(sys.stdout)

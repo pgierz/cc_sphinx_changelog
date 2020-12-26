@@ -1,0 +1,104 @@
+[36m[22mUnreleased[39m[22m
+[36m[22m==========[39m[22m
+[32m[22mSupport[39m[22m
+[32m[22m-------[39m[22m
+* [33m[22m944e0b7[39m[22m                  changes to rtd theme, adds heading to changelog
+* [33m[22m89ad1e5[39m[22m                  adds formatted changelog to docs
+
+                           Adds the formatted changelog produced by the program output to the
+                           documentation (one-time only). This serves as a test for how it will
+                           render online, adding links will not yet be included.
+
+
+[36m[22m0.5.1[39m[22m
+[36m[22m=====[39m[22m
+[32m[22mBug Fixes[39m[22m
+[32m[22m---------[39m[22m
+* [33m[22m55dec48[39m[22m                  fixes heading grouping logic
+
+                           The grouping logic in the heading formatting function was incorrect,
+                           and retrieved a string ``Unknown`` rather than the list the
+                           ``Unknown`` key was pointing to.  Closes #3
+* [33m[22m43a8501[39m[22m [[31m[22msetup.py[39m[22m]       adds missing dependencies
+
+                           Closes #4
+
+
+[36m[22m0.5.0[39m[22m
+[36m[22m=====[39m[22m
+[32m[22mNew Feature[39m[22m
+[32m[22m-----------[39m[22m
+* [33m[22mfb11339[39m[22m                  adds color output and formats to stdout nicely
+
+                           Closes #2
+[32m[22mSupport[39m[22m
+[32m[22m-------[39m[22m
+* [33m[22m0dc1750[39m[22m                  puts everything into functions
+[32m[22mUnknown[39m[22m
+[32m[22m-------[39m[22m
+* [33m[22mdff4e2f[39m[22m                  
+
+
+[36m[22m0.4.1[39m[22m
+[36m[22m=====[39m[22m
+[32m[22mBug Fix[39m[22m
+[32m[22m-------[39m[22m
+* [33m[22m06d4115[39m[22m                  better implementation of getting commit messages
+
+                           The previous implementation was looking at ``git.head.log()``, which
+                           did not register all commits as commits, some rather as pull or merge.
+                           Now we directly iterate over commits and extract the log message. This
+                           also preserves body parts of the message.
+[32m[22mSupport[39m[22m
+[32m[22m-------[39m[22m
+* [33m[22m9ea4503[39m[22m                  automatically publish to pypi when automatic bump occurs
+
+
+[36m[22m0.4.0[39m[22m
+[36m[22m=====[39m[22m
+[32m[22mNew Feature[39m[22m
+[32m[22m-----------[39m[22m
+* [33m[22mc9dd3c2[39m[22m                  parses log and prints rST style release version summaries
+
+                           This parses the log, gives headers based upon 'bump: ', and gathers
+                           each commit in a bullet point list. Next step is to parse type of
+                           change.
+[32m[22mSupport[39m[22m
+[32m[22m-------[39m[22m
+* [33m[22mdf12a50[39m[22m [[31m[22mchangelog[39m[22m]      changelog fixup
+
+
+[36m[22m0.3.0[39m[22m
+[36m[22m=====[39m[22m
+[32m[22mNew Feature[39m[22m
+[32m[22m-----------[39m[22m
+* [33m[22m75a190a[39m[22m                  automatic bump version on push
+
+
+[36m[22m0.2.0[39m[22m
+[36m[22m=====[39m[22m
+[32m[22mBug Fix[39m[22m
+[32m[22m-------[39m[22m
+* [33m[22m72f506a[39m[22m [[31m[22mtags[39m[22m]           adds v prefix to tags
+[32m[22mSupport[39m[22m
+[32m[22m-------[39m[22m
+* [33m[22m5724fb1[39m[22m                  fixs tag publishing
+
+                           Tags in this project don't use the v prefix.
+* [33m[22mfbd165c[39m[22m                  removes travis ci
+
+
+[36m[22m0.1.1[39m[22m
+[36m[22m=====[39m[22m
+[32m[22mBug Fix[39m[22m
+[32m[22m-------[39m[22m
+* [33m[22m839fb8d[39m[22m [[31m[22mcz[39m[22m]             fixup conventional commit bumping
+
+
+[36m[22m0.1.0[39m[22m
+[36m[22m=====[39m[22m
+[32m[22mNew Feature[39m[22m
+[32m[22m-----------[39m[22m
+* [33m[22mf78d28e[39m[22m                  initial commit
+
+
