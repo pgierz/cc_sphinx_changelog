@@ -3,12 +3,14 @@
 
 """Main module."""
 
+import sys
+import textwrap
+
 import backpedal
 import crayons
 import git
-
 from ansiwrap import ansilen
-import textwrap
+
 
 def ansi_ljust(s, width):
     needed = width - ansilen(s)
@@ -16,6 +18,7 @@ def ansi_ljust(s, width):
         return s + " " * needed
     else:
         return s
+
 
 def get_repo(repo_top=None):
     # TODO: Path from config (or URL??)
@@ -26,7 +29,9 @@ def get_repo(repo_top=None):
 
 def get_commit_messages(repo):
     log = repo.head.log()
-    commit_messages = [(commit.hexsha[:7], commit.message.strip()) for commit in repo.iter_commits()]
+    commit_messages = [
+        (commit.hexsha[:7], commit.message.strip()) for commit in repo.iter_commits()
+    ]
     return commit_messages
 
 
@@ -47,11 +52,11 @@ def fmt_message(message, current_release):
     if message.startswith("bump:"):
         return
     message = message.split(":")
-    commit_type, commit_message =  message[0], ":".join(message[1:])
+    commit_type, commit_message = message[0], ":".join(message[1:])
     if "\n" in commit_message:
         commit_header = commit_message.splitlines()[0].lstrip()
         commit_body = textwrap.fill(" ".join(commit_message.splitlines()[1:]).strip())
-        commit_body = "\n".join(27*" "+l for l in commit_body.splitlines())
+        commit_body = "\n".join(27 * " " + l for l in commit_body.splitlines())
         commit_message = f"{commit_header}\n\n{commit_body}"
     else:
         commit_message = commit_message.strip()
@@ -67,8 +72,16 @@ def fmt_message(message, current_release):
         fmted_message = f"{ansi_ljust(crayons.yellow(sha), 25)}{commit_message}"
     commits.append(fmted_message)
 
+
 def fmt_headings(items):
-    TYPES = {"fix": "Bug Fix", "feat": "New Feature", "ci": "Support", "docs": "Support", "perf": "Support", "refactor": "Support"}
+    TYPES = {
+        "fix": "Bug Fix",
+        "feat": "New Feature",
+        "ci": "Support",
+        "docs": "Support",
+        "perf": "Support",
+        "refactor": "Support",
+    }
     SHOWN_HEADINGS = {"Bug Fix": [], "New Feature": [], "Support": [], "Unknown": []}
     for heading, commits in items:
         group = SHOWN_HEADINGS.get(TYPES.get(heading, "Unknown"))
