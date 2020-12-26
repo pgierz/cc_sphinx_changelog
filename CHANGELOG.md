@@ -1,3 +1,9 @@
+## v0.5.2 (2020-12-26)
+
+### Refactor
+
+- moves main program into a simple function
+
 ## v0.5.1 (2020-12-25)
 
 ### Fix
