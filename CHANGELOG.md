@@ -1,3 +1,10 @@
+## v0.6.0 (2020-12-28)
+
+### Feat
+
+- adds sphinx directive
+- adds optional printing of colors (default on)
+
 ## v0.5.2 (2020-12-26)
 
 ### Refactor
