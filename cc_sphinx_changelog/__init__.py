@@ -4,7 +4,7 @@
 
 __author__ = """Paul Gierz"""
 __email__ = "pgierz@awi.de"
-__version__ = "0.6.0"
+__version__ = "0.6.1"
 
 
 from docutils import nodes

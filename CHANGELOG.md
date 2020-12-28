@@ -1,3 +1,9 @@
+## v0.6.1 (2020-12-28)
+
+### Fix
+
+- **setup.py**: adds missing dependencies
+
 ## v0.6.0 (2020-12-28)
 
 ### Feat
