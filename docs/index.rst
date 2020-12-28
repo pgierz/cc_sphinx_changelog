@@ -1,5 +1,5 @@
 Welcome to Conventional Commit Sphinx Changelog's documentation!
-======================================
+================================================================
 
 .. toctree::
    :maxdepth: 2
