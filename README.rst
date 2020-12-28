@@ -9,7 +9,7 @@ Conventional Commit Sphinx Changelog
 .. image:: https://github.com/pgierz/cc_sphinx_changelog/workflows/Python%20package/badge.svg
         :target: https://github.com/pgierz/cc_sphinx_changelog/actions?query=workflow%3A%22Python+package%22
 
-.. image:: https://readthedocs.org/projects/cc-sphinx-changelog/badge/?version=latest
+.. image:: https://readthedocs.org/projects/convention-commits-sphinx/badge/?version=latest
         :target: https://convention-commits-sphinx.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
