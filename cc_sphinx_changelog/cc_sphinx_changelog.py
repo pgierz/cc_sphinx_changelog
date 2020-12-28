@@ -35,7 +35,7 @@ def get_commit_messages(repo):
     return commit_messages
 
 
-def group_commits(commit_messages):
+def group_commits(commit_messages, add_colors):
     releases = {"Unreleased": {}}
     current_release = releases["Unreleased"]
     for message in commit_messages:
@@ -43,11 +43,11 @@ def group_commits(commit_messages):
             rel_head = message[1].split(" → ")[-1]
             releases[rel_head] = {}
             current_release = releases[rel_head]
-        fmt_message(message, current_release)
+        fmt_message(message, current_release, add_colors=add_colors)
     return releases
 
 
-def fmt_message(message, current_release):
+def fmt_message(message, current_release, add_colors=True):
     sha, message = message
     if message.startswith("bump:"):
         return
@@ -66,10 +66,16 @@ def fmt_message(message, current_release):
         scope = scope.replace(")", "")
     commits = current_release.setdefault(commit_type, [])
     if scope:
-        prejust = f"{crayons.yellow(sha)} [{crayons.red(scope)}]"
+        if add_colors:
+            prejust = f"{crayons.yellow(sha)} [{crayons.red(scope)}]"
+        else:
+            prejust = f"{sha} [{scope}]"
         fmted_message = f"{ansi_ljust(prejust, 25)}" + commit_message
     else:
-        fmted_message = f"{ansi_ljust(crayons.yellow(sha), 25)}{commit_message}"
+        if add_colors:
+            fmted_message = f"{ansi_ljust(crayons.yellow(sha), 25)}{commit_message}"
+        else:
+            fmted_message = f"{ansi_ljust(sha, 25)}{commit_message}"
     commits.append(fmted_message)
 
 
@@ -104,7 +110,7 @@ def print_changelog(location):
         location = open(location, "w")
     repo = get_repo()
     commit_messages = get_commit_messages(repo)
-    releases = group_commits(commit_messages)
+    releases = group_commits(commit_messages, add_colors=True)
 
     for release in releases:
         print(crayons.cyan(release), file=location)
